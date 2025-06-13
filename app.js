@@ -2,9 +2,15 @@ import express from 'express'
 import mongoose from "mongoose"
 // import mockTasks from './data/mock.js'
 import Task from './models/Task.js'
-import { DATABASE_URL } from "./env.js"
+import cors from 'cors';
+// import { DATABASE_URL } from ".env"
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+await mongoose.connect(process.env.DATABASE_URL).then(() => console.log('Connected to DB'))
 
 const app = express()
+app.use(cors())
 app.use(express.json())
 
 const asyncHandler = (handle) => {
@@ -21,11 +27,11 @@ const asyncHandler = (handle) => {
   }
 }
 
-app.get('/tasks', asyncHandler(async (req, res) => {
-  // const
-}))
+// app.get('/tasks', asyncHandler(async (req, res) => {
+//   // const
+// }))
 
-await mongoose.connect(DATABASE_URL).then(() => console.log('Connected to DB'))
+
 
 app.get('/tasks', async (req, res) => {
   const sort = req.query.sort
